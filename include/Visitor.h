@@ -45,6 +45,7 @@ class CombatVisitor : public NPCVisitor{
         }
         void visit_squirrel(std::list<std::string>& to_delete, std::unique_ptr<NPC>& npc, std::unique_ptr<NPC>& to_npc) override{
             if (to_npc->get_type() == "druid" || to_npc->get_type() == "werewolf"){
+                to_npc->kill_npc();
                 to_delete.push_back(to_npc->get_name());
                 notify(combat_event_string(npc, to_npc));
 
@@ -52,6 +53,7 @@ class CombatVisitor : public NPCVisitor{
         }
         void visit_werewolf(std::list<std::string>& to_delete, std::unique_ptr<NPC>& npc, std::unique_ptr<NPC>& to_npc) override{
             if (to_npc->get_type() == "druid"){
+                to_npc->kill_npc();
                 to_delete.push_back(to_npc->get_name());
                 notify(combat_event_string(npc, to_npc));
             }
@@ -64,9 +66,9 @@ class CombatVisitor : public NPCVisitor{
                     if (npc.get() == to_npc.get()) {
                         continue;
                     }
-                    if ((((npc->get_x_cord() - to_npc->get_x_cord()) * (npc->get_x_cord() - to_npc->get_x_cord())) +
+                    if (((((npc->get_x_cord() - to_npc->get_x_cord()) * (npc->get_x_cord() - to_npc->get_x_cord())) +
                     ((npc->get_y_cord() - to_npc->get_y_cord()) * (npc->get_y_cord() - to_npc->get_y_cord()))) 
-                    <= (rad * rad)){
+                    <= (rad * rad)) && (npc->is_alive_NPC() && to_npc->is_alive_NPC())){
                         if (npc->get_type() == "squirrel"){
                             visit_squirrel(to_delete, npc, to_npc);
                         }

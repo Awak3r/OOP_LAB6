@@ -11,8 +11,8 @@ int main() {
     std::cout << "=== До боя ===" << std::endl;
     npcs.print_all();
     std::cout << "Всего NPC: " << npcs.get_size() << "\n\n";
-    std::cout << "=== Начинается бой (радиус 50) ===" << std::endl;
-    combat.do_combat(npcs, 50.0);
+    std::cout << "=== Начинается бой  ===" << std::endl;
+    combat.do_combat(npcs, 10000.0);
     std::cout << "\n=== После боя ===" << std::endl;
     npcs.print_all();
     std::cout << "Осталось NPC: " << npcs.get_size() << std::endl;

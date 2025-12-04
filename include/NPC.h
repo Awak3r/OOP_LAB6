@@ -14,30 +14,34 @@
 
 class NPC {
     public:
-        NPC() : x_cord(0), y_cord(0) {}
-        NPC(const std::string& nam, double x, double y): name(nam), x_cord(x), y_cord(y) {}
-        NPC(const NPC& other) : name(other.name), x_cord(other.x_cord), y_cord(other.y_cord) {}
+        NPC() : x_cord(0), y_cord(0), is_alive(true) {}
+        NPC(const std::string& nam, double x, double y): name(nam), x_cord(x), y_cord(y), is_alive(true){}
+        NPC(const NPC& other) : name(other.name), x_cord(other.x_cord), y_cord(other.y_cord), is_alive(true) {}
         NPC& operator=(const NPC& other) {
             if (this != &other) {
                 name = other.name;
                 x_cord = other.x_cord;
                 y_cord = other.y_cord;
+                is_alive = other.is_alive;
             }
             return *this;
         }
         bool operator==(const NPC& other) const {
-            return x_cord == other.x_cord && y_cord == other.y_cord && name == other.name;
+            return x_cord == other.x_cord && y_cord == other.y_cord && name == other.name && is_alive == other.is_alive;
         }
         void set_x(double x) { x_cord = x; }
         void set_y(double y) { y_cord = y; }
         void set_name(const std::string& nam) { name = nam; }
         double get_x_cord() const { return x_cord; }
         double get_y_cord() const { return y_cord; }
+        void kill_npc() { is_alive = false; }
+        bool is_alive_NPC() { return is_alive;}
         std::string get_name() const { return name; }
         virtual std::string get_type() const { return "NPC"; }
         virtual ~NPC() noexcept = default;
         
     private:
+        bool is_alive;
         double x_cord;
         double y_cord;
         std::string name;
